@@ -6,7 +6,7 @@ public class SC_CanvasPauseMenu : MonoBehaviour
     
     public GameObject playerBody;
     public GameObject gamePauseCanvas;
-    public GameObject canvas;
+    public GameObject HUD;
     
 
     private void Awake()
@@ -33,7 +33,7 @@ public class SC_CanvasPauseMenu : MonoBehaviour
         gamePauseCanvas.SetActive(false);
         Time.timeScale = 1;
         gameIsPaused = false;
-        canvas.SetActive(true);
+        HUD.SetActive(true);
         playerBody.SetActive(true);
     }
 
@@ -42,7 +42,7 @@ public class SC_CanvasPauseMenu : MonoBehaviour
         gamePauseCanvas.SetActive(true);
         Time.timeScale = 0;
         gameIsPaused = true;
-        canvas.SetActive(false);
+        HUD.SetActive(false);
         playerBody.SetActive(false);
         
     }
