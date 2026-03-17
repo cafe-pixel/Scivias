@@ -1,16 +1,9 @@
 using UnityEngine;
 
-public class SC_States : MonoBehaviour
+public abstract class SC_States : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public abstract void OnEnterState(SC_FSMController fsmController);
+    public abstract void OnUpdateState();
+    public abstract void OnExitState();
+    
 }
