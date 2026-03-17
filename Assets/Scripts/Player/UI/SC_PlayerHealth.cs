@@ -5,6 +5,8 @@ public class SC_PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int initialHealth;
     private int currentHealth;
+    
+    public static System.Action On0Life;
 
     private void Awake()
     {
@@ -19,5 +21,16 @@ public class SC_PlayerHealth : MonoBehaviour
     private void RestartLife()
     {
         currentHealth = initialHealth;
+    }
+
+    private void OnDisable()
+    {
+        SC_CanvasGameOver.OnRestart -= RestartLife;
+    }
+
+    private void ReciveDamage()
+    {
+        currentHealth--;
+        if (currentHealth <= 0) On0Life?.Invoke();
     }
 }

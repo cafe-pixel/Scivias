@@ -15,6 +15,10 @@ public class SC_PlayerInteract : MonoBehaviour
    {
       playerInput.actions["Interact"].started += Interact;
    }
+   private void OnDisable()
+   {
+      playerInput.actions["Interact"].started -= Interact;
+   }
 
    private void Interact(InputAction.CallbackContext obj)
    {
