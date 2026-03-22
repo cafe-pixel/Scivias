@@ -45,17 +45,20 @@ public class SC_CanvasPauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        Cursor.visible = true;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         gamePauseCanvas.SetActive(false);
         Time.timeScale = 1;
         gameIsPaused = false;
         HUD.SetActive(true);
         firstPersonController.enabled = true;
+       
     }
 
     private void Pause()
     {
-        Cursor.visible = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         gamePauseCanvas.SetActive(true);
         Time.timeScale = 0;
         gameIsPaused = true;

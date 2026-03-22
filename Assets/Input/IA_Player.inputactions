@@ -164,6 +164,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UIFinal",
+            "id": "2b1dd318-fbf8-45c9-a96b-8145e82e08ef",
+            "actions": [
+                {
+                    "name": "MakeGoFaster",
+                    "type": "Button",
+                    "id": "508b9972-1db3-48c5-a4c5-dac41d3bd2a3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "dbf21ae3-3689-4955-80f0-969d86eabcc1",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MakeGoFaster",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

@@ -13,6 +13,7 @@ public class SC_MainMenu : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private GameObject panel;
     [SerializeField] private GameObject jumpScare;
+    [SerializeField] private AudioClip audioClip;
    
 
     private void Awake()
@@ -25,6 +26,8 @@ public class SC_MainMenu : MonoBehaviour
 
     public void OnClickStartGame()
     {
+        audioSource.volume = Single.MaxValue;
+        audioSource.PlayOneShot(audioClip);
         panel.SetActive(true);
         jumpScare.SetActive(true);
         StartCoroutine(WaitOneSecondePlease());

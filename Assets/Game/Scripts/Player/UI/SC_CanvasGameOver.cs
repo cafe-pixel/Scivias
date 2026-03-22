@@ -17,14 +17,14 @@ public class SC_CanvasGameOver : MonoBehaviour
     {
         OnRestart?.Invoke();
         Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("Game");
         
     }
 
     public void OnClickBackMenuButton()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("MainMenu");
     }
 
     private void OnEnable()
