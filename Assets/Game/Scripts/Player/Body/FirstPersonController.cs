@@ -42,6 +42,11 @@ public class FirstPersonController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    private void Start()
+    {
+        audioSource.loop = false;
+    }
+
     private void OnEnable()
     {
         //.started - key down
