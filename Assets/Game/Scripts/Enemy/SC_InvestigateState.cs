@@ -25,6 +25,7 @@ public class SC_InvestigateState : SC_States
     public override void OnEnterState(SC_FSMController fsmController)
     {
         myController = fsmController;
+        animator.SetTrigger("lookAround");
     }
 
     public override void OnUpdateState()

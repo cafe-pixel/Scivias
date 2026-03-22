@@ -63,7 +63,7 @@ public class SC_PatrolsState : SC_States
     private void BeginMovement()
     {
         if (!isNotTheFirstTime) sensorSystem.enabled = true;
-        animator.SetTrigger("playerInTrigger");
+        
         patrolActive = true;
         StartCoroutine(PatrolAndWait());
     }
@@ -72,6 +72,7 @@ public class SC_PatrolsState : SC_States
     {
         //Sale por pantalla al HUD "Te sientes observado" durante un segundo
         yield return new WaitForSeconds(3);
+        animator.SetTrigger("playerInTrigger");
         //Comienza a caminar haciendo ruido, de manera que se puede saber con antelación cuando viene
         while (patrolActive)
         {

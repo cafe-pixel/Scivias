@@ -18,6 +18,7 @@ public class SC_ChaseAttackState : SC_States
     public static System.Action<Vector3> OnPlayerLost;
     [SerializeField] Animator animator;
     private bool canAttack = false;
+    private bool canAttackNow;
 
 
     private void Awake()
@@ -31,7 +32,13 @@ public class SC_ChaseAttackState : SC_States
     private void OnEnable()
     {
         SC_SensorSystem.OnPlayerFound += OnPlayerFound;
-        
+        SC_TriggerEnemyBegginMove.OnTriggerEnemy += CanAttackNow;
+
+    }
+
+    private void CanAttackNow()
+    {
+        canAttackNow = true;
     }
 
     private void OnDisable()
@@ -98,7 +105,7 @@ public class SC_ChaseAttackState : SC_States
 
     private void OnTriggerEnter(Collider other)
       {
-          if (other.TryGetComponent<SC_PlayerHealth>(out var playerHealth))
+          if (other.TryGetComponent<SC_PlayerHealth>(out var playerHealth) && canAttackNow)
           {
               playerHealth.ReciveDamage();
           }

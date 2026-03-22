@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f95808eea7b1b14596504ef93edea39, type: 3}
+  m_Name: SO_Cuadro1
+  m_EditorClassIdentifier: Assembly-CSharp::ItemInfoData
+  uiType: 0
+  text: '2. Concerning fear of the Lord
+
+    
+
+    And before him at the foot of
+    the mountain stands an image full of eyes on all sides. For the Fear of the Lord
+    stands in God''s presence with humility and gazes on the Kingdom of God, surrounded
+    by the clarity of a good and just intention, exercising her zeal and stability
+    among humans. And thus you can discern no human form in her on account of those
+    eyes. For by the acute sight of her contemplation she counters all forgetfulness
+    of God''s justice, which people often feel in their mental tedium, so no inquiry
+    by weak mortals eludes her vigilance.'
+  image: {fileID: 0}

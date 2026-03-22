@@ -1658,9 +1658,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4008175916210385106}
   - {fileID: 4703601017047919548}
   - {fileID: 2943131202522605990}
+  - {fileID: 4008175916210385106}
   m_Father: {fileID: 6646965824371372794}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2666,6 +2666,10 @@ MonoBehaviour:
   itemTextsUI: {fileID: 6261681567196021360}
   itemTextsImagesUI: {fileID: 3971399715514749}
   itemImagesUI: {fileID: 5997824466056660049}
+  itemTextsText: {fileID: 0}
+  itemImagesText: {fileID: 0}
+  itemImage: {fileID: 0}
+  itemImageUIText: {fileID: 0}
   messagesUI: {fileID: 1584198808327352355}
   secondsMessageUI: 1
   contextualButton: {fileID: 7331306717021876702}
