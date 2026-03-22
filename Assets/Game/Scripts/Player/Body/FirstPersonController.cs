@@ -29,6 +29,7 @@ public class FirstPersonController : MonoBehaviour
     private Vector3 totalMovement;
 
     private PlayerInput playerInput;
+    private AudioSource audioSource;
 
     private Camera cam;
     private void Awake()
@@ -38,6 +39,7 @@ public class FirstPersonController : MonoBehaviour
         cam = Camera.main;
         Cursor.lockState = CursorLockMode.Locked;
         playerInput = GetComponent<PlayerInput>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -66,6 +68,7 @@ public class FirstPersonController : MonoBehaviour
     {
         inputVector = context.ReadValue<Vector2>();
         horizontalMovement = new Vector3(inputVector.x, 0, inputVector.y) * movementSpeed;
+        audioSource.Play();
     }
     
     private void Jump()
@@ -78,9 +81,29 @@ public class FirstPersonController : MonoBehaviour
     {
         GroundCheck(); 
         ApplyGravity();
-        MoveAndRotate(); 
+        MoveAndRotate();
+
         
+
         //if (inputSystem.Player.Jump.ReadValue<float>() > 0) Jump();
+    }
+
+    private void FixedUpdate()
+    {
+        FootstepsNoise();
+    }
+
+    private void FootstepsNoise()
+    {
+        //si el valor del vector es mayor que cero y esta en el suelo hace pisadas
+        if (inputVector.sqrMagnitude > 0.1 && isGrounded)
+        {
+            if (!audioSource.isPlaying) audioSource.Play();
+        }
+        else
+        {
+            audioSource.Stop();
+        }
     }
 
     private void MoveAndRotate()

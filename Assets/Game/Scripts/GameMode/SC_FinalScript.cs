@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
@@ -15,6 +16,9 @@ public class SC_FinalScript : MonoBehaviour
     //Te manda a la pantalla de inicio
     [Header("Images")]
     [SerializeField] private Image[] images;
+    private List<Image> imagesList = new List<Image>();
+    [SerializeField] private AudioSource audio;
+    [SerializeField] private AudioClip passAudio;
     
       
     [SerializeField]private TMP_Text textBox;
@@ -32,6 +36,7 @@ public class SC_FinalScript : MonoBehaviour
     private WaitForSeconds simpleDelay;
     private WaitForSeconds inpunctuationDelay;
     
+    private AudioSource audioSource;
     
     [Header("Typewriter Settings")]
     [Tooltip("20")][SerializeField] private float firstCharacterPerSecond; //cuantas letras x seg van a aparecer
@@ -40,14 +45,6 @@ public class SC_FinalScript : MonoBehaviour
     private float interpunctuationDelay;
     
     
-    //Skipping functionality
-    public bool CurrentlySkipping { get; private set; }
-    private WaitForSeconds skipDelay;
-
-    [Header("Skip Options")] [SerializeField]
-    private bool quickSpeed;//le mete más velocidad al texto
-
-    [Tooltip("5")][SerializeField] [Min(1)] private int skipSpeedUp; //le acelera la velocidad
     
     
     //Event functionality
@@ -57,6 +54,7 @@ public class SC_FinalScript : MonoBehaviour
     [Tooltip("0.25")] [SerializeField] [Range(0.1f, 0.5f)] private float sendDoneDelay;//envia terminar la caja con delay
     private bool readyForNewText;
     [SerializeField]private GameObject cover;
+    
     private bool canUpdateImageColor;
 
     public static Action CompleteTextRevealed;
@@ -67,48 +65,55 @@ public class SC_FinalScript : MonoBehaviour
 
     private void Awake()
     {
-        
+        audioSource = GetComponent<AudioSource>();
         cover.SetActive(false);
         interpunctuationDelay = firstInterpunctuationDelay;
         characterPerSecond = firstCharacterPerSecond;
         simpleDelay = new WaitForSeconds(1 / characterPerSecond);
         inpunctuationDelay = new WaitForSeconds(interpunctuationDelay);
-
-        skipDelay = new WaitForSeconds(1 / (characterPerSecond * skipSpeedUp)); //te muestra todo el texto rápido
+        
         textboxFUllEventDelay = new WaitForSeconds(sendDoneDelay);
 
-        readyForNewText = true;
+
+        foreach (Image image in images)
+        {
+            imagesList.Add(image);
+        }
+        audio.volume = Single.MaxValue;
+        audio.playOnAwake = false;
+        
     }
 
     private void Start()
     {
         dialogueNumber = 0;
+        StartCoroutine(HideImages());
+        
+        
+        audioSource.Play();
+        
+    }
+
+    private IEnumerator HideImages()
+    {
+        foreach (var image in imagesList)
+        {
+            image.gameObject.SetActive(false);
+            audio.PlayOneShot(passAudio);
+            yield return new WaitForSeconds(0.3f);
+        }
+        yield return new WaitForSeconds(0.8f);
         if (dialogueText.Length> dialogueNumber) StartTyping(dialogueText);
         
     }
+
     private void OnEnable()
     {
         CompleteTextRevealed += WaitAndMainMenu;
-      // playerInput = GetComponent<PlayerInput>();
-      // playerInput.SwitchCurrentActionMap("UIFinal");
-      // playerInput.actions["MakeGoFaster"].started += MakeGoFaster;
-      // playerInput.actions["MakeGoFaster"].canceled += MakeGoNormalSpeed;
+      
     }
 
-    private void MakeGoFaster(InputAction.CallbackContext obj)
-    {
-        if (textBox.maxVisibleCharacters <
-                textBox.textInfo
-                    .characterCount)
-            {
-                quickSpeed = true;
-            }
-        else
-        {
-            WaitAndMainMenu();
-        }
-        
-    }
+    
 
     private void Update()
     {
@@ -123,42 +128,29 @@ public class SC_FinalScript : MonoBehaviour
         imageColor.a += Time.deltaTime;
         image.color = imageColor;//se asigna el color
         Debug.Log(imageColor.a);
-        if (imageColor.a >= 1) 
+        if (1 <= imageColor.a)
+        {
+            Debug.Log("Quiero mandarlo a la escena 1");
             SceneManager.LoadScene("MainMenu");
-        
+
+        }
+            
     }
 
 
     private void OnDisable()
     {
         CompleteTextRevealed -= WaitAndMainMenu;
-       //playerInput = GetComponent<PlayerInput>();
-       //playerInput.SwitchCurrentActionMap("UIFinal");
-       //playerInput.actions["MakeGoFaster"].started -= MakeGoFaster;
-       //playerInput.actions["MakeGoFaster"].canceled -= MakeGoNormalSpeed;
+       
     }
 
-    private void MakeGoNormalSpeed(InputAction.CallbackContext obj)
-    {
-        if (textBox.maxVisibleCharacters <
-            textBox.textInfo
-                .characterCount)
-        {
-            quickSpeed = false;
-        }
-        else
-        {
-            WaitAndMainMenu();
-        }
-    }
-
+    
     private void StartTyping(string newText)
     {
         if (typeWriterCoroutine != null)
             StopCoroutine(typeWriterCoroutine);
 
-        readyForNewText = false;
-        CurrentlySkipping = false;
+        
 
         textBox.text = newText;
         textBox.ForceMeshUpdate();
@@ -173,7 +165,6 @@ public class SC_FinalScript : MonoBehaviour
     private IEnumerator SkipSpeedupReset()
     {
         yield return new WaitUntil(() => textBox.maxVisibleCharacters == textBox.textInfo.characterCount - 1);//espera hasta que el numero de char visible sea el numero de contador del text info -1 
-        CurrentlySkipping = false;//se termina de skippear rápido
     }
 
     
@@ -185,7 +176,7 @@ public class SC_FinalScript : MonoBehaviour
 
     private IEnumerator WaitAndMainMenuCoroutine()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         //Quita el texto y las imágenes
         
         cover.SetActive(true);
@@ -230,15 +221,8 @@ public class SC_FinalScript : MonoBehaviour
                                  character == '!' || character == ',' || character == ';' ||
                                  character == '.' || character == ':' || character == '-';//si es un signo d puntuacion hacemos q lo espere sino no
             
-            if (CurrentlySkipping)
-            {
-                delay = 0f; // si estamos skipeando, no hay delay
-            }
-            else if (quickSpeed)
-            {
-                delay = 1f / (firstCharacterPerSecond * skipSpeedUp);
-            }
-            else if (isPunctuation)
+            
+            if (isPunctuation)
             {
                 delay = firstInterpunctuationDelay;
             }

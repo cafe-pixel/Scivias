@@ -23,7 +23,8 @@ public class SC_ChaseAttackState : SC_States
     private void Awake()
     {
         investigateState = GetComponent<SC_InvestigateState>(); 
-        agent = GetComponent<NavMeshAgent>(); agent.speed = currentVelocity;
+        agent = GetComponent<NavMeshAgent>(); 
+        agent.speed = currentVelocity;
         sensorSystem = GetComponent<SC_SensorSystem>();
     }
 

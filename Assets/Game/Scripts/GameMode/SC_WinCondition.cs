@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SC_WinCondition : MonoBehaviour
 {
@@ -6,9 +7,7 @@ public class SC_WinCondition : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //Has ganado
-            //Escena de creditos
-            //Main menu
+            SceneManager.LoadScene("Win");
         }
     }
 }

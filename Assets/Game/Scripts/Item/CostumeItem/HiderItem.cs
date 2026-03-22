@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class HiderItem : SC_InteractableItem
 {
-    public override void Interact()
+    private void Interact2()
     {
         //Le dice al player que se ponga en su posicion
         //Le dice que si se mueve se desesconde

@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class SC_CanvasManager : MonoBehaviour
 {
@@ -10,6 +12,11 @@ public class SC_CanvasManager : MonoBehaviour
     [Header("ItemsInteractables")][SerializeField] private GameObject itemTextsUI;
     [SerializeField] private GameObject itemTextsImagesUI;
     [SerializeField] private GameObject itemImagesUI;
+    
+    [SerializeField] private TextMeshProUGUI itemTextsText;
+    [SerializeField] private TextMeshProUGUI itemImagesText;
+    [SerializeField] private Image itemImage;
+    [SerializeField]  private Image itemImageUIText;
     [Header("UI")]
     [SerializeField] private GameObject messagesUI;
     [SerializeField] private float secondsMessageUI;
@@ -57,13 +64,18 @@ public class SC_CanvasManager : MonoBehaviour
         {
             case UIType.Image:
                 itemImagesUI.SetActive(true);
-                return;
+                itemImage.sprite = data.image;
+                
+                break;
             case UIType.Text:
                 itemTextsUI.SetActive(true);
-                return;
+                itemTextsText.text = data.text;
+                break;
             case UIType.TextWithImage:
                 itemTextsImagesUI.SetActive(true);
-                return;
+                itemImageUIText.sprite = data.image;
+                itemImagesText.text = data.text;
+                break;
         }
         playerInput.actions["ExitUI"].Enable();
         contextualButton.SetActive(false);
@@ -94,19 +106,7 @@ public class SC_CanvasManager : MonoBehaviour
         messagesUI.SetActive(false);
     }
 
-    private void OnCanvasTextImageInteract()
-    {
-        CloseAllUI();
-        
-        playerInput.actions["ExitUI"].Enable();
-    }
-
-    private void OnCanvasImageInteract()
-    {
-        CloseAllUI();
-        itemImagesUI.SetActive(true);
-        playerInput.actions["ExitUI"].Enable();
-    }
+    
 
     private void OnExitUI(InputAction.CallbackContext obj)
     {
@@ -145,13 +145,7 @@ public class SC_CanvasManager : MonoBehaviour
     
     }
 
-    private void OnCanvasTextInteract()
-    {
-        CloseAllUI();//cierra por si acaso todas las anteriores
-        OpenUI(itemTextsUI);
-        
-        
-    }
+    
     private void CloseAllUI()
     {
         itemTextsUI.SetActive(false);
@@ -160,3 +154,4 @@ public class SC_CanvasManager : MonoBehaviour
         messagesUI.SetActive(false);
     }
 }
+

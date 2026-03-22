@@ -31,6 +31,7 @@ public class SC_PlayerHealth : MonoBehaviour
     public void ReciveDamage()
     {
         currentHealth--;
+        Debug.Log(currentHealth);
         if (currentHealth <= 0) On0Life?.Invoke();
     }
 }
